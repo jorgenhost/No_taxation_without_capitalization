@@ -1,2 +1,24 @@
 timestamp;status_code;length;output_file;url
-2023-03-24 10:23:23;200;385362;c:\Users\JBH\Desktop\ghetto_house_prices;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a&salesDateMin=1992
+2023-03-24 11:12:37;200;384857;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a
+2023-03-24 11:12:59;200;384857;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a
+2023-03-24 11:13:08;200;385304;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=2&sort=date-a
+2023-03-24 11:13:17;200;384871;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=3&sort=date-a
+2023-03-24 11:13:27;200;385201;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=4&sort=date-a
+2023-03-24 11:13:36;200;385117;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=5&sort=date-a
+2023-03-24 11:14:46;200;384857;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a
+2023-03-24 11:14:51;200;385304;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=2&sort=date-a
+2023-03-24 11:14:55;200;384871;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=3&sort=date-a
+2023-03-24 11:14:59;200;385201;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=4&sort=date-a
+2023-03-24 11:15:03;200;385117;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=5&sort=date-a
+2023-03-24 11:25:17;200;384857;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a
+2023-03-24 11:25:23;200;384857;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a
+2023-03-24 11:33:02;200;384857;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a
+2023-03-24 11:33:06;200;385304;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=2&sort=date-a
+2023-03-24 11:33:10;200;384871;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=3&sort=date-a
+2023-03-24 11:33:14;200;385201;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=4&sort=date-a
+2023-03-24 11:33:18;200;385117;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=5&sort=date-a
+2023-03-24 11:33:40;200;384857;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=1&sort=date-a
+2023-03-24 11:33:44;200;385304;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=2&sort=date-a
+2023-03-24 11:33:48;200;384871;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=3&sort=date-a
+2023-03-24 11:33:52;200;385201;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=4&sort=date-a
+2023-03-24 11:33:56;200;385117;c:\Users\JBH\Dropbox\11_semester\Public_Econ_seminar;https://www.boliga.dk/salg/resultater?searchTab=1&page=5&sort=date-a
