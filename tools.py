@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import os
-
+import pandas as pd
 def log(response: requests.Response):
     """
     Creates or appends a log-file with information from a `requests.get()`-call.
@@ -63,3 +63,18 @@ def get_json(url: str, header: dict):
     log(response) # Log 
 
     return json_
+
+def get_evals_bbr(bbr_df: pd.DataFrame, year):
+    property_vals=[{'unitId': bbr_df['unitId'][i], 'eval_prop': e['propertyValue'], 'eval_land': e['landValue'], 'last_changed':e['lastChange'], 'eval_year': e['evaluationYear']} 
+                for i, evaluationInfos in enumerate(bbr_df['evaluationInfos'])
+                for e in evaluationInfos if e['evaluationYear'] == year]
+    
+    df=pd.DataFrame(property_vals)
+    df['eval_year']=df['eval_year'].astype('int16')
+    df['eval_prop']=df['eval_prop'].astype('int32')
+    df['eval_land']=df['eval_land'].astype('int32')
+    df['last_changed']=pd.to_datetime(df['last_changed'])
+    df = df.sort_values(by='last_changed', ascending=False).drop_duplicates(subset='unitId', keep='first')
+    df=df.rename(columns={'unitId': 'guid'})
+    df = df.reset_index(drop=True)
+    return df

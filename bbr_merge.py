@@ -19,8 +19,12 @@ def merge_bbr_func(path: str):
     full_df1 = pd.concat(dfs)
     return full_df1
 
-# path = 'data/bbr'
-# full_df = merge_bbr_func(path)
-# full_df = full_df.reset_index(drop=True)
-
-# full_df.to_parquet('data/bbr_merged.pq')
+path = 'data/bbr'
+full_df = merge_bbr_func(path)
+full_df = full_df.reset_index(drop=True)
+full_df['unitInfo.propertyUnitType']=full_df['unitInfo.propertyUnitType'].astype('category')
+full_df['unitInfo.bathroomQuantity']=full_df['unitInfo.bathroomQuantity'].astype('int8')
+full_df['unitInfo.toiletQuantity']=full_df['unitInfo.toiletQuantity'].astype('int8')
+full_df['bbrInfoBox.lotSize']=full_df['bbrInfoBox.lotSize'].astype('int32')
+full_df['bbrInfoBox.area']=full_df['bbrInfoBox.area'].astype('int16')
+full_df.to_parquet('data/bbr_merged.pq')
