@@ -83,64 +83,51 @@ def get_evals_bbr(bbr_df: pd.DataFrame, year):
     df = df.reset_index(drop=True)
     return df
 
-# From advanced microeconometrics
+def convert_latex_table(latex_str):
+    # Find the beginning and end of the tabular environment
+    begin = latex_str.find("\\begin{tabular}")
+    end = latex_str.find("\\end{tabular}")
 
-def outreg(
-    results: dict,
-    var_labels: list,
-    name: str,
-    se_type='normal',
-) -> pd.Series:
-    
-    '''
-    Args:
-        Results (dict)      : pass the results (dict) output from the estimate()-function
-        var_labels (list)   : List of variable names used previously in our regression
-        name (str)          : the name given to the pd.Series as output
-        se_type (str)       : If robust std. errors have been used, write in brackets []
-    
-    Returns:
-        A pd.Series with variable names as index. NB! Add number of obs (N), time periods (T), regressors (K) and degrees of freedoms manually if appropriate.
-        Ideally, pass one result at a time, and then merge with pandas later on.
-        When merging, use 'outer' as method. In this case, it picks up all labels defined from different estimations
-    
-    '''
-    sig_levels = {0.05: '*', 0.01: '**', 0.001: '***'} #Set significance level for p-value
-    
-    deg_of_frees = results['deg_of_frees'] #Extract degrees of freedom from results dict
+    # Extract the contents of the tabular environment
+    tabular_str = latex_str[begin:end]
 
-    beta = pd.Series(results['b_hat'].reshape(-1), index=var_labels).round(2) #Make series of our coeff
-    se = pd.Series(results['se'].reshape(-1), index=var_labels).round(3) #Make series of standard errors
-    t_stat = pd.Series(results['t_values'].reshape(-1), index=var_labels).round(4) #Make series of t-values
-    p_val = pd.Series(
-                t.cdf(-np.abs(t_stat),df=deg_of_frees)*2, index=var_labels).round(4) #Make series of p-values, using the deg of freedoms
-    
-    temp_df = pd.concat((beta, se, p_val), axis=1) #concatenate above into dataframe, index is the varlabels
-    temp_df.columns=['beta', 'se', 'pt'] #set column names to beta, se, pt (p-values)
-    temp_df=temp_df.stack() #Stack it so we make a multiindex
-    temp_df.name=name #Have to name the series
+    # Split the tabular environment into rows
+    rows = tabular_str.split("\\\\")
+    rows = [row.strip() for row in rows]
 
-    #Defining i, j, k
-    # i: index position of our coeffs/var_labels
-    # j: index position of our standard errors
-    # k: index position of our p-values
-    # -> loop through these in increments of 3 and add stars for significance levels
+    # Split the first row into columns
+    cols = rows[1].split("&")
+    cols = [col.strip() for col in cols]
 
-    for i,j,k in zip(range(0,len(temp_df-2),3), range(1, len(temp_df-1),3), range(2,len(temp_df),3)):
-        var_index=temp_df.index[i]
-        se_index=temp_df.index[j]
-        p_val_index=temp_df.index[k]
-        if temp_df.at[p_val_index]<0.001:
-            temp_df.at[var_index]=f'{temp_df.at[var_index]}'+sig_levels[0.001]
-        elif temp_df.at[p_val_index]<0.01:
-            temp_df.at[var_index]=f'{temp_df.at[var_index]}'+sig_levels[0.01]
-        elif temp_df.at[p_val_index]<=0.05:
-            temp_df.at[var_index]=f'{temp_df.at[var_index]}'+sig_levels[0.05]
-        elif temp_df.at[p_val_index]>0.05:
-            temp_df.at[var_index]=temp_df.at[var_index]
-        
-        #Write standard errors 
-        if se_type != 'normal':
-            temp_df.at[se_index]=f'[{temp_df.at[se_index]}]' #In brackes for robust std errors
-        else:
-            temp_df.at[se_index]=f'({temp_df.at[se_index]})' #In parentheses for 'normal' std errors
+    # Get the length of the longest column name
+    max_len = max([len(col) for col in cols])
+
+    # Reformat the table rows
+    new_rows = []
+    for row in rows[2:]:
+        # Split the row into cells
+        cells = row.split("&")
+        cells = [cell.strip() for cell in cells]
+
+        # Pad the column names with spaces
+        cells[0] = cells[0].ljust(max_len)
+
+        # Add the row to the new table
+        new_row = " & ".join(cells)
+        new_rows.append(new_row)
+
+    # Reformat the table columns
+    new_cols = " & ".join([col.ljust(max_len) for col in cols])
+
+    # Reformat the table header
+    header = "\\begin{table}[H]\n\\centering\n\\begin{tabular}{@{}lcccc@{}}\n\\toprule\n"
+    header += " " * max_len + " & \\multicolumn{3}{c}{Quantile regressions} & \\\\\\cmidrule(lr){2-4}\n"
+    header += new_cols + " & OLS-FE \\\\\n\\midrule\n"
+
+    # Reformat the table footer
+    footer = "\\bottomrule\n\\end{tabular}\n\\end{table}\n"
+
+    # Combine the header, new rows, and footer
+    new_tabular_str = header + "\n".join(new_rows) + "\n" + footer
+
+    return new_tabular_str
