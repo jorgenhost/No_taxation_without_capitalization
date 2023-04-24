@@ -23,4 +23,6 @@ gen year06_delta_tax_eff = year06*delta_tax_eff
 gen year07_delta_tax_eff = year07*delta_tax_eff 
 gen year08_delta_tax_eff = year08*delta_tax_eff 
 
-xtqreg ln_real_price year05_delta_tax_eff year06_delta_tax_eff year07_delta_tax_eff year08_delta_tax_eff ln_prop_value i.year, i(kommune_old_id) quantile(.1(0.1)0.9)
+// xtqreg ln_real_price year05_delta_tax_eff year06_delta_tax_eff year07_delta_tax_eff year08_delta_tax_eff ln_prop_value i.year, i(kommune_old_id) quantile(.1(0.1)0.9)
+
+mmqreg  ln_real_price year05_delta_tax_eff year06_delta_tax_eff year07_delta_tax_eff year08_delta_tax_eff ln_prop_value, absorb(year kommune_old_id) quantile(.1(0.1)0.9)
