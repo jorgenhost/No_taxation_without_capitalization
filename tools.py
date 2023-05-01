@@ -4,6 +4,7 @@ import time
 import os
 import pandas as pd
 import numpy as np
+from toolz import curry
 
 def log(response: requests.Response):
     """
