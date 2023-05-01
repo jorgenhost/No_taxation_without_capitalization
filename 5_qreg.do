@@ -29,4 +29,4 @@ forvalues i = 10(10)90 {
 }
 
 
-esttab using "tabs\stata_raw.tex", style(tex) replace star(* 0.10 ** 0.05 *** 0.01) se b(%5.3f)
+esttab using "tabs\stata_raw.tex", style(tex) replace star(* 0.10 ** 0.05 *** 0.01) se b(%5.3f) substitute({l} {p{\linewidth}})
