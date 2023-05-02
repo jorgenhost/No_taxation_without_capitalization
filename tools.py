@@ -3,8 +3,6 @@ from bs4 import BeautifulSoup
 import time
 import os
 import pandas as pd
-import numpy as np
-from toolz import curry
 
 def log(response: requests.Response):
     """
@@ -60,6 +58,18 @@ def get_soup(url: str, header: dict) -> BeautifulSoup:
     return soup
 
 def get_json(url: str, header: dict):
+    """
+    Fetches the JSON-file from api.boliga.dk.  
+
+    Input:
+    - - - - - - - - 
+    url (str)     :    URL of the website to receive the HTML-string from. \n
+    header (dict) :    Dictionary to send in the query string for the request.
+
+    Returns:
+    - - - - - - - - 
+    json :  json-file from Boliga's API.
+    """
 
     response = requests.get(url, headers=header) # Request
     json_ = response.json()
@@ -67,12 +77,26 @@ def get_json(url: str, header: dict):
 
     return json_
 
-def get_evals_bbr(bbr_df: pd.DataFrame, year):
+def get_evals_bbr(bbr_df: pd.DataFrame, year: int):
+    """
+    Fetches evaluation by each individual house (called 'guid' in the data) in a given year. 
+
+    Input:
+    - - - - - - - - 
+    year (int)    :    Year of property valuation. \n
+    header (dict) :    Dictionary to send in the query string for the request.
+
+    Returns:
+    - - - - - - - - 
+    df (DataFrame) :  Returns DataFrame of property valuations by year.
+    """
+
     property_vals=[{'guid': bbr_df['guid'][i], f'eval_prop_{year}': e['propertyValue'], f'eval_land_{year}': e['landValue'], f'eval{year}_last_changed':e['lastChange'], 'eval_year': e['evaluationYear']} 
                 for i, evaluationInfos in enumerate(bbr_df['evaluationInfos'])
                 for e in evaluationInfos if e['evaluationYear'] == year]
     
     df=pd.DataFrame(property_vals)
+    # Tweak data types to conserve memory
     df['eval_year']=df['eval_year'].astype('int16')
     eval_prop = f'eval_prop_{year}'
     eval_land= f'eval_land_{year}'

@@ -4,11 +4,13 @@ from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import tqdm
 
+# Reads JSON-file from API and normalizes/flattens data as arrays in JSON-file have different sizes.
 def read_json_file(json_file):
     with open(json_file) as f:
         data = json.load(f)
     return pd.json_normalize(data)[['unitId','evaluationInfos','bbrInfoBox.lotSize', 'bbrInfoBox.area', 'bbrInfoBox.evaluationPrice', 'unitInfo.toiletQuantity','unitInfo.bathroomQuantity','unitInfo.propertyUnitType','bfenr']]
 
+# Auxiliary merge function for BBR data from api.boliga.dk
 def merge_bbr_func(path: str):
     data_dir = Path(path)
     json_files = list(data_dir.glob('*.json'))
@@ -19,6 +21,9 @@ def merge_bbr_func(path: str):
     full_df1 = pd.concat(dfs)
     return full_df1
 
+# Path of data directory defined in scraper notebook.
+# Adjusts datatypes to conserve memory usage
+# Saves to parquet to preserve data types.
 path = 'data/bbr'
 full_df = merge_bbr_func(path)
 full_df = full_df.reset_index(drop=True)
