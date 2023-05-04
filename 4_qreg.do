@@ -20,7 +20,8 @@ forvalues i = 10(10)90 {
 	mat B = r(table)
 	mat B = B'
 	
-	// Overwrite current datasets with said matrix - this all estimates in order of how it is written
+	// Overwrite current datasets with said matrix
+	// This will have all estimates saved - including upper/lower bound 
 	clear
 	svmat B, names(col)
 	
