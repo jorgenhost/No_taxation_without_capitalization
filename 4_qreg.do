@@ -14,7 +14,7 @@ gen year08_delta_tax_eff = year08*delta_tax_eff
 
 forvalues i = 10(10)90 {
 	preserve
-	eststo quant_est_`i': mmqreg  ln_real_price year05_delta_tax_eff year06_delta_tax_eff year07_delta_tax_eff year08_delta_tax_eff ln_prop_value, absorb(year kommune_old_id) quantile(`i')
+	eststo quant_est_`i': mmqreg  ln_real_price year05_delta_tax_eff year06_delta_tax_eff year07_delta_tax_eff year08_delta_tax_eff ln_prop_value, absorb(year kommune_old_id) quantile(`i') cluster(index)
 	
 	// Save estimates to matrix 
 	mat B = r(table)
