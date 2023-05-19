@@ -1,20 +1,14 @@
 use "data\house.dta", clear
-gen year05 = 1 if year == 2005
-replace year05 = 0 if year != 2005
-gen year06 = 1 if year == 2006
-replace year06 = 0 if year!= 2006
-gen year07 = 1 if year == 2007
-replace year07 = 0 if year != 2007
-gen year08 = 1 if year == 2008
-replace year08 = 0 if year != 2008
-gen year05_delta_tax_eff = year05*delta_tax_eff 
-gen year06_delta_tax_eff = year06*delta_tax_eff 
-gen year07_delta_tax_eff = year07*delta_tax_eff 
-gen year08_delta_tax_eff = year08*delta_tax_eff 
+
+forvalues i=2000/2008 {
+	gen year`i'= 1 if year == `i'
+	replace year`i'=0 if year != `i'
+	gen year`i'_delta_tax_eff = year`i'*delta_tax_eff
+}
 
 forvalues i = 10(10)90 {
 	preserve
-	eststo quant_est_`i': mmqreg  ln_real_price year05_delta_tax_eff year06_delta_tax_eff year07_delta_tax_eff year08_delta_tax_eff ln_prop_value, absorb(year kommune_old_id) quantile(`i') cluster(index)
+	eststo quant_est_`i': qui mmqreg  ln_real_price year2005_delta_tax_eff year2006_delta_tax_eff year2007_delta_tax_eff year2008_delta_tax_eff ln_prop_value, absorb(year kommune_old_id) quantile(`i') cluster(index)
 	
 	// Save estimates to matrix 
 	mat B = r(table)
@@ -30,7 +24,7 @@ forvalues i = 10(10)90 {
 	keep if _n == 15
 	
 	// Save varname
-	gen varname = "year07_delta_tax_eff"
+	gen varname = "year2007_delta_tax_eff"
 	
 	// Make it clear which quantile is estimated
 	gen q = `i'
@@ -42,3 +36,32 @@ forvalues i = 10(10)90 {
 
 
 esttab using "tabs\stata_raw.tex", style(tex) replace star(* 0.10 ** 0.05 *** 0.01) se b(%5.3f) substitute({l} {p{\linewidth}})
+
+// Pre trend validation
+forvalues i = 10(10)90 {
+	preserve
+	eststo quant_est_`i': qui mmqreg  ln_real_price  year2000_delta_tax_eff year2001_delta_tax_eff year2002_delta_tax_eff year2003_delta_tax_eff year2005_delta_tax_eff year2006_delta_tax_eff year2007_delta_tax_eff year2008_delta_tax_eff ln_prop_value, absorb(year kommune_old_id) quantile(`i') cluster(index)
+	
+	// Save estimates to matrix 
+	mat B = r(table)
+	mat B = B'
+
+	// Overwrite current datasets with said matrix
+	// This will have all estimates saved - including upper/lower bound 
+	clear
+	svmat B, names(col)
+	
+	// Only keep estimates of pre trend years.
+	keep if _n > 20 
+	keep if _n < 5
+	
+	// Give name
+	egen varname = seq(), from(2000) to(2004)
+	
+	// Make it clear which quantile is estimated
+	gen q = `i'
+	replace q = q/100
+	order q, first
+	save models\validation\quant_est_`i'_val, replace
+	restore
+}
