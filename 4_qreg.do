@@ -19,7 +19,7 @@ forvalues i = 10(10)90 {
 	clear
 	svmat B, names(col)
 	
-	// Only keep estimates of the 2007 year-coefficient (effect of reform). This is 'observation' 15 in matrix.
+	// Only keep estimates of the 2005-2008 year-coefficients
 	// NB! No way in Stata to keep varnames when doing this. If the order of the varnames in the regression is changed, you need to change which observation to keep
 	keep if inrange(_n, 13, 16)
 	
@@ -53,7 +53,7 @@ forvalues i = 10(10)90 {
 	clear
 	svmat B, names(col)
 	
-	// Only keep estimates of all years
+	// Only keep estimates of the 2000-2003 & 2005-2008 year-coefficients
 	keep if inrange(_n, 21, 28) 
 	
 	// Give name
@@ -86,7 +86,7 @@ forvalues i = 10(10)90 {
 	clear
 	svmat B, names(col)
 	
-	// Only keep estimates of all years
+	// Only keep estimates of the 2003 & 2005-2008 year-coefficients
 	keep if inrange(_n, 15, 19) 
 	
 	// Give name
@@ -103,7 +103,10 @@ forvalues i = 10(10)90 {
 	restore
 }
 
+*************************************
 ** W trend diff? 2003 as base year **
+*************************************
+
 forvalues i = 10(10)90 {
 	preserve
 	eststo quant_est_`i': qui mmqreg  ln_real_price year2000_delta_tax_eff year2001_delta_tax_eff year2002_delta_tax_eff year2004_delta_tax_eff year2005_delta_tax_eff year2006_delta_tax_eff year2007_delta_tax_eff year2008_delta_tax_eff ln_prop_value, absorb(year kommune_old_id) quantile(`i') cluster(index)
@@ -117,7 +120,7 @@ forvalues i = 10(10)90 {
 	clear
 	svmat B, names(col)
 	
-	// Only keep estimates of all years
+	// Only keep estimates of the 2000-2002 & 2004-2008 year-coefficients
 	keep if inrange(_n, 21, 28) 
 	
 	// Give name
@@ -150,7 +153,7 @@ forvalues i = 10(10)90 {
 	clear
 	svmat B, names(col)
 	
-	// Only keep estimates of all years
+	// Only keep estimates of the 2000-2003 & 2005-2008 year-coefficients
 	keep if inrange(_n, 21, 28) 
 	
 	// Give name
