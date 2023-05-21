@@ -9,4 +9,4 @@ The project is structured as follows:
 - ``3_kommune_shp.ipynb`` - processes shapefiles to be used with GPS-coordinates in house sale data.
 - ``4_main.ipynb`` - used for data and econometric analysis along with ``4_qreg.do``. 
 
-![main_res](figs/fig_quant_reg_res.png "Quantile treatment effects of land tax reform on house prices")
+![main_res](figs/fig_main_quant_reg_v_ols.png "Quantile treatment effects of land tax reform on house prices")

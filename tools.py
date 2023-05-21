@@ -17,11 +17,11 @@ def log(response: requests.Response):
         url         :   The URL of the response.
     """
 
-    # Open or create the csv file
-    if os.path.isfile('log'):
-        log = open('log','a')
+    # Open or create the txt file
+    if os.path.isfile('log.txt'):
+        log = open('log.txt','a')
     else: 
-        log = open('log','w')
+        log = open('log.txt','w')
         header = ['timestamp', 'status_code', 'length', 'output_file', 'url'] # Header names
         log.write(';'.join(header) + "\n")
         
@@ -33,7 +33,7 @@ def log(response: requests.Response):
     url = response.url # URL-string
     
     # Open the log file and append the gathered log information
-    with open('log2','a') as log:
+    with open('log.txt','a') as log:
         log.write(f'{timestamp};{status_code};{length};{output_path};{url}' + "\n") 
 
 def get_soup(url: str, header: dict) -> BeautifulSoup:
