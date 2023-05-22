@@ -10,3 +10,6 @@ The project is structured as follows:
 - ``4_main.ipynb`` - used for data and econometric analysis along with ``4_qreg.do``. 
 
 ![main_res](figs/fig_main_quant_reg_v_ols.png "Quantile treatment effects of land tax reform on house prices")
+
+## To-do
+- ``1_scraper.ipynb`` - when scraping the BBR, the scraper saves each API-call to the disk (one house per call). Perhaps adjust so it saves in 'batches' of like 2000 houses?
