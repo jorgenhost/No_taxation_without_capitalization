@@ -1,6 +1,6 @@
 # No taxation without capitalization
 
-A seminar paper in public economics by Jørgen Baun Høst, University of Copenhagen. In this paper, I exploit quasi-experimental evidence from a 2007 reform that substantially changed land value taxation ('grundskyldspromille') in Denmark to see its effect on house prices. I use quantile regression on webscraped data from [boliga.dk](https://www.boliga.dk/) and find evidence of capitalization effects, which is higher at the top of the market segment than it is at the bottom.
+A seminar paper in public economics by Jørgen Baun Høst, University of Copenhagen. In this paper, I exploit quasi-experimental evidence from a 2007 reform that substantially changed land value taxation ('grundskyldspromille') in Denmark to see its effect on house prices. I use quantile regression on webscraped data from [boliga.dk](https://www.boliga.dk/) to investigate potential heterogenous effects across the distribution of house prices. I find that land value taxes are capitalized into house prices, but that this effect is higher at the top of the market segment than it is at the bottom.
 
 The project is structured as follows:
 
