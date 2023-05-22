@@ -10,6 +10,7 @@ def read_pq_file(pq_file):
     return data[['unitId','evaluationInfos','bbrInfoBox.lotSize', 'bbrInfoBox.area', 'bbrInfoBox.evaluationPrice', 'unitInfo.toiletQuantity','unitInfo.bathroomQuantity','unitInfo.propertyUnitType','bfenr']]
 
 # Auxiliary merge function for BBR data from api.boliga.dk
+# Reports errors if we have empty files (non-issue, really)
 def merge_bbr_func(path: str):
     data_dir = Path(path)
     pq_files = list(data_dir.glob('*.pq'))
