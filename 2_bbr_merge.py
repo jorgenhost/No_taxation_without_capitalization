@@ -3,6 +3,7 @@ import pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor
 import tqdm
+import os
 
 # Reads JSON-file from API and normalizes/flattens data as arrays in JSON-file have different sizes.
 def read_pq_file(pq_file):
@@ -15,8 +16,11 @@ def merge_bbr_func(path: str):
     data_dir = Path(path)
     pq_files = list(data_dir.glob('*.pq'))
 
+    # Focus on non-empty parquet files
+    non_empty_pq_files = [file for file in pq_files if os.path.getsize(file)>0]
+
     with ThreadPoolExecutor() as executor:
-        dfs = list(tqdm.tqdm(executor.map(read_pq_file, pq_files)))
+        dfs = list(tqdm.tqdm(executor.map(read_pq_file, non_empty_pq_files)))
 
     full_df1 = pd.concat(dfs)
     return full_df1
