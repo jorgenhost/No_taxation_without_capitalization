@@ -106,3 +106,9 @@ def get_evals_bbr(bbr_df: pd.DataFrame, year: int):
     df = df.sort_values(by=f'eval{year}_last_changed', ascending=False).drop_duplicates(subset='guid', keep='first')
     df = df.reset_index(drop=True)
     return df
+
+def demean_columns(df, columns):
+    df_demeaned = df.copy()
+    for col in columns:
+        df_demeaned[col] = df.groupby("kommune_old")[col].transform("mean") - df.groupby("year")[col].transform("mean")
+    return df_demeaned[columns]
